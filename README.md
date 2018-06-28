@@ -1,17 +1,17 @@
 # MS_ExomeChip
 QC and analysis code used to produce the association results published in "Low frequency and rare coding variation contributes to multiple sclerosis risk"
 
-IMSGC exome chip QC/analysis pipeline
-International Multiple Sclerosis Genetics Consortium
-21 June 2018
-Mitja Mitrovic <mitja.mitrovic@yale.edu>
-Chris Cotsapas <cotsapas@broadinstitute.org>
+IMSGC exome chip QC/analysis pipeline <br>
+International Multiple Sclerosis Genetics Consortium <br>
+21 June 2018 <br>
+[Mitja Mitrovic](mailto:mitja.mitrovic@yale.edu) <br>
+[Chris Cotsapas](mailto:cotsapas@broadinstitute.org) <br>
 
 ## Front matter
-This README file documents the quality control (QC) and analysis code used to produce the association results published in "Low frequency and rare coding variation contributes to multiple sclerosis risk"[[LINK]]. Here we provide an overview of the software provided in this distribution, the software dependencies, and the sources of genotype data required. We also provide lists of samples and SNPs that pass our QC process, if you do not want to step through the entire QC pipeline.  
+This README file documents the quality control (QC) and analysis code used to produce the association results published in [Low frequency and rare coding variation contributes to multiple sclerosis risk](https://www.biorxiv.org/content/early/2018/03/23/286617). Here we provide an overview of the software provided in this distribution, the software dependencies, and the sources of genotype data required. We also provide lists of samples and SNPs that pass our QC process, if you do not want to step through the entire QC pipeline.  
 
 ## Disclaimers
-* Throughout, we use the LSF job scheduling system to distribute some of the more compute-intensive analyses on a cluster. We have tagged all instances with #LSF in Main_wrapper.txt for ease of reference.
+* Throughout, we use the LSF job scheduling system to distribute some of the more compute-intensive analyses on a cluster. We have tagged all instances with `#LSF` in `Main_wrapper.txt` for ease of reference.
 * Association statistics calculated with different numbers of samples and/or stratum structure will vary from those we report. 
 * The code here is provided as-is. We have validated that this runs without errors on our own systems, but do not guarantee that this will be the case in different computing environments.
 
@@ -19,18 +19,18 @@ This README file documents the quality control (QC) and analysis code used to pr
 Pre-QC genotype data for 36,219 cases and 38,629 controls can be obtained from the IMSGC (dac@imsgc.net). 
 
 Our samples are split into 42 cohorts which represent sample collections, systematic batches and chip versions. In the paper, we assembled our cohorts into 13 strata for analysis. For each cohort, we provide:
-A README file
-Raw genotypes from Gencall, as plink bed/bim/fam files
-Genotypes after zCall processing of Gencall files, as plink bed/bim/fam files
-A list of samples passing our QC, in plink fam format, named <prefix>.qcpass.inds
-A list of variants passing our QC, in plink bim format, named <prefix>.qcpass.snps
-A data processing masterfile as an xlsx Excel workbook, showing how many samples and variants pass each step of our QC pipeline for all cohorts in the collection.
-A list of all cohorts belonging to the same stratum as the current cohort, as a text file of plink file name roots. The file is named <prefix>-merge-scheme.txt
-A lookup table for variant IDs used in these files to canonical rsIDs (hg19/gb137). NA means no rsID record exists for that variant in hg19/gb137. The file is named 20180402-rsIDs.txt
++ A README file
++ Raw genotypes from Gencall, as plink bed/bim/fam files
++ Genotypes after zCall processing of Gencall files, as plink bed/bim/fam files
++ A list of samples passing our QC, in plink fam format, named `<prefix>.qcpass.inds`
++ A list of variants passing our QC, in plink bim format, named `<prefix>.qcpass.snps`
++ A data processing masterfile as an xlsx Excel workbook, showing how many samples and variants pass each step of our QC pipeline for all cohorts in the collection.
++ A list of all cohorts belonging to the same stratum as the current cohort, as a text file of plink file name roots. The file is named `<prefix>-merge-scheme.txt`
++ A lookup table for variant IDs used in these files to canonical rsIDs (hg19/gb137). NA means no rsID record exists for that variant in hg19/gb137. The file is named `20180402-rsIDs.txt`
 
 
 ## Recreating our post-QC dataset 
-You can recreate our dataset without running raw data through this pipeline. To do this, extract the individuals and markers passing QC in each cohort (per-cohort *.exc.qcpass.inds and *.exc.qcpass.snps files). You can then choose to recreate our analysis strata (per-cohort <prefix>-merge-scheme.txt files).
+You can recreate our dataset without running raw data through this pipeline. To do this, extract the individuals and markers passing QC in each cohort (per-cohort `*.exc.qcpass.inds and *.exc.qcpass.snps` files). You can then choose to recreate our analysis strata (per-cohort `<prefix>-merge-scheme.txt` files).
 
 ## Running our QC pipeline
 Here, we provide the full code required to re-analyze our raw data and replicate our published results.  
@@ -38,56 +38,53 @@ Here, we provide the full code required to re-analyze our raw data and replicate
 ### Pipeline overview
 Our pipeline is split into twelve distinct steps, including meta-analysis of association results across strata (summarized in Figure S1 of our manuscript). These are:
 
-Basic QC per cohort: remove markers and samples with high missingness, Hardy-Weinberg filters, heterozygosity by missingness filter. 
-Remove samples affected by batch effects per cohort (identity-by-missingness filter)
-Remove population outliers per cohort by projection PCA
-Merge cohorts into strata
-Remove samples affected by batch effects per stratum (identity-by-missingness filter)
-Remove related individuals per stratum
-Remove markers with differential missingness between cases and controls
-Remove population outliers per stratum by projection PCA
-Remove monomorphic variants
-Calculate final PCA for population stratification control 
-Calculate case/control association statistics with mixed linear models per stratum
-Meta-analyze association statistics across all strata
++ Basic QC per cohort: remove markers and samples with high missingness, Hardy-Weinberg filters, heterozygosity by missingness filter. 
++ Remove samples affected by batch effects per cohort (identity-by-missingness filter)
++ Remove population outliers per cohort by projection PCA
++ Merge cohorts into strata
++ Remove samples affected by batch effects per stratum (identity-by-missingness filter)
++ Remove related individuals per stratum
++ Remove markers with differential missingness between cases and controls
++ Remove population outliers per stratum by projection PCA
++ Remove monomorphic variants
++ Calculate final PCA for population stratification control 
++ Calculate case/control association statistics with mixed linear models per stratum
++ Meta-analyze association statistics across all strata
 
 ### Software dependencies
-GNU bash 3.2.57 or later
-EIGENSOFT 6.1.3 or later
-GCTA v1.91.4
-FlashPCA 1.2.6 or later
-Perl v5.12 or later
-PLINK v1.9
-Python 3.0
-R v2.15 or later (including packages ggplot2 v2.2.1, mclust v5.4, GenABEL v1.8, qqman v0.1.4, dplyr v0.7.4)
-
-
-
++ GNU bash 3.2.57 or later
++ EIGENSOFT 6.1.3 or later
++ GCTA v1.91.4
++ FlashPCA 1.2.6 or later
++ Perl v5.12 or later
++ PLINK v1.9
++ Python 3.0
++ R v2.15 or later (including packages ggplot2 v2.2.1, mclust v5.4, GenABEL v1.8, qqman v0.1.4, dplyr v0.7.4)
 
 ### Running the pipeline
-The entire pipeline can be run from main_wrapper.sh, which calls the scripts included in this distribution to execute all twelve steps of our pipeline. There are detailed instructions for each step in the wrapper script. User input is required at various stages:
+The entire pipeline can be run from `main_wrapper.sh`, which calls the scripts included in this distribution to execute all twelve steps of our pipeline. There are detailed instructions for each step in the wrapper script. User input is required at various stages:
 
-In Step 1, for each cohort you must do …. 
-In Step 1, for each thing you must do …
-In step 5, you must have the HLA variant file in the same directory … 
++ In Step 1, for each cohort you must do …. 
++ In Step 1, for each thing you must do …
++ In Step 5, you must have the HLA variant file in the same directory … 
 
 ### Notes about options
-In step 12, note that the “+ logscale” option is required because the per-stratum association files list effect betas, NOT odds ratios (remember that beta = ln(OR) ).
+In step 12, note that the `+ logscale` option is required because the per-stratum association files list effect betas, NOT odds ratios (remember that `beta = ln(OR)` ).
 
 
 ### Structure and description of files and directories in this distribution
 
-Directory/file name
-Description
-1.basic_qc_pipeline
++ Directory/file name
++ Description
+1 basic_qc_pipeline
 QC scripts and suppl. files.
-2.post_qc_ibm
+2 post_qc_ibm
 Identity-by-missingness scripts and suppl. files.
-3.pPCA
+3 pPCA
 Projection PCA scripts and suppl. files.
-4.standardize_alleles
+4 standardize_alleles
 Scripts and suppl. files to update allelic map to match European 1000 Genomes.
-7.differential_missingness
+7 differential_missingness
 Two scripts to identify SNPs with differentially missing data between cases and controls.
 Main_wrapper.sh
 Wrapper with 12 subsequent steps from raw files gencall and zcall files to MLMA meta-analysis.
