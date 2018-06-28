@@ -1,4 +1,4 @@
-# MS_ExomeChip
+# IMSGC ExomeChip QC and analysis pipeline
 QC and analysis code used to produce the association results published in "Low frequency and rare coding variation contributes to multiple sclerosis risk"
 
 IMSGC exome chip QC/analysis pipeline <br>
