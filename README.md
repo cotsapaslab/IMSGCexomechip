@@ -63,7 +63,8 @@ Our pipeline is split into twelve distinct steps, including meta-analysis of ass
 ### Running the pipeline
 The entire pipeline can be run from `main_wrapper.sh`, which calls the scripts included in this distribution to execute all twelve steps of our pipeline. There are detailed instructions for each step in the wrapper script. User input is required at various stages:
 
-+ In Step 1, for each cohort you must do …. 
++ In Step 1, for each cohort you must first modify ~/IMSGCexomechip/1.basic_qc_pipeline/meta file. Structure of meta file used   in this analysis is described in ~/IMSGCexomechip/1.basic_qc_pipeline/README. Meta file requires per cohort minimal and       maximal heterozygosity input. Values used in this QC are saved in ~/IMSGCexomechip/Per.cohort.minHet.maxHet.xlsx.
+
 + In Step 1, for each thing you must do …
 + In Step 5, you must have the HLA variant file in the same directory … 
 
