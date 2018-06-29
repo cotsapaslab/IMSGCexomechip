@@ -1,0 +1,31 @@
+## Meta File for Exome Chip QC and Analysis Pipeline
+
+## Main directory where pipeline scripts are located
+Script Directory: /path/to/directory/1.basic_qc_pipeline/
+
+## Fill in the data with the appropriate path names after the colons (no spaces allowed)
+# Make sure output directory exists
+Output Directory: /path/to/output/directory/
+
+# Project name must be one word with no spaces
+Project Name: EXOMECHIP
+
+## Optional parameters
+
+QC_ONLY: 1
+SKIP_HLA: 1
+mergeQueue week 
+
+## Plink data inputs with parameters per batch
+
+cohort1 gencall /path/to/plink/gencall/file/cohort1.gencall
+cohort1 zcall /path/to/plink/gencall/file/cohort1.zcall
+cohort1 minHet 0.25
+cohort1 maxHet 0.35
+cohort1 gencall_missrate 0.03
+cohort1 zcall_missrate 0.01
+cohort1 removesexerror 1
+cohort1 removemendelerror 1
+cohort1 unrelated_output 1
+cohort1 use1KGdef 0
+

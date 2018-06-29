@@ -1,0 +1,143 @@
+----------------------------------------------------
+
+Exome Chip QC Pipeline
+Jackie Goldstein [jigold@broadinstitute.org]
+March 19, 2013
+
+To run pipeline modify example meta file with
+desired parameters [examples/meta].
+
+Example Usage: python main.py [path.to.meta]
+
+Example Meta file is in examples/ folder.
+Recommend that this job is submitted to the week queue using LSF
+
+----------------------------------------------------
+
+Requirements needed for running:
+
+1. LSF is available
+2. PLINK is loaded (use PLINK on Broad cluster)
+3. R is loaded ( use R-2.15 )
+
+----------------------------------------------------
+
+Goal of Pipeline:
+
+Take a combination of raw and/or qc'd exome chip data for each project, QC raw data, merge with the shared controls set, perform HLA imputation, calculate first 10 PCs for European samples, and output a final dataset that has no duplicates.
+
+----------------------------------------------------
+
+Input File Requirements:
+
+1. No duplicates present (exact same FID and IID present more than once) in one batch
+2. No "_A" or "_C" suffixes to HapMap sample names -- these need to be removed with --update-ids command
+3. All alleles must be in FHG19 Broad format. Conversion files are available to go from HG19 to FHG19 and AB to FHG19
+
+-----------------------------------------------------
+
+Structure of Meta file:
+
+1. The main directory for the pipeline must be specified. Keep space after colon:
+Script Directory: <pipeline.directory>
+
+2. Output directory must be specified. Must be one word no spaces with space after "Directory:":
+Output Directory: <output.directory>
+
+3. Project name must be specified. Must be one word with no spaces. Keep space after "Name:":
+Project Name: TEST
+
+4. Give each set of input files a batch name. Every input parameter for that batch must start with the batch name, followed by the parameter, and then followed by the parameter value.
+Ex:
+batch1 gencall /humgen/atgu1/fs03/wip/jackie/saec/dilin/in/gencall.FHG19
+batch1 qc /humgen/atgu1/fs03/wip/jackie/saec/dilin/in/gencall.FHG19
+
+Either a set of gencall and zcall files must be specified for each batch or use the qc flag to input one QC'd file for that batch:
+
+batch1 gencall /humgen/atgu1/fs03/wip/jackie/saec/dilin/in/gencall.FHG19
+batch1 zcall /humgen/atgu1/fs03/wip/jackie/saec/dilin/in/gencall.FHG19
+OR
+batch1 qc /humgen/atgu1/fs03/wip/jackie/saec/dilin/in/gencall.FHG19
+
+5. Optional batch parameters. Defaults are listed.
+
+batch1 minHet 0.1 # this is the minimum percentage of het calls for rare variants based on 1000 genomes QC'd SNPs with MAF < 5%
+batch1 maxHet 1.20 # this is the maximum percentage of het calls for rare variants based on 1000 genomes QC'd SNPs with MAF < 5%
+batch1 maxNoCall 0.75 # this is the maximum percentage of No Calls for common variants based on 1000 genomes QC'd data with MAF > 5%
+batch1 gencall_missrate 0.03 # this is the maximum rate of No Calls for the GenCall input as input to the PLINK --geno flag
+batch1 zcall_missrate 0.01 # this is the maximum rate of No Calls for the zCall input as input to the PLINK --geno flag
+batch1 removesexerror 1 # 1- remove any sex errors from final output; 0 - keep sex errors
+batch1 removemendelerror 1 # 1 - remove any mendel errors from final output; 0 - keep mendel errors
+batch1 unrelated_output 1 # 1 - final batch output files only contain unrelated samples; 0 - keep related samples in final batch output files
+batch1 skip 0 # 0 - include batch in pipeline; 1- skip batch in pipeline
+batch1 use1KGdef 1 # 1- uses QC'd 1KG data to define common and rare variants for sample QC; 0 - use input data to define common and rare variants
+batch1 queue hour # default LSF queue is hour with -W 4:00 flag added. May want to change to week for large datasets
+batch1 maxMendelError 10 # number of mendel errors a family is allowed to have before it is considered to have failed the mendel error check
+batch1 rusage 2 #requested 2GB of memory
+
+** For the gencall_missrate parameter, I'd recommend using 1% for sample sizes > 1000 or 10 / # samples for smaller sample sizes.
+** For the zcall_missrate parameter, I'd recommend using 0.5% for sample sizes > 1000 European Samples or 5 / # European samples for smaller sample sizes.
+These parameters will need to be tweaked for each dataset. OmniExpress + Exome data is known to have a higher No Call rate than other data types.
+
+6. Optional parameter:
+
+To only do QC and not merge batches together or do HLA imputation or PCA, put the following line in the meta file:
+QC_ONLY: 1
+
+To skip HLA imputation, put the following in the meta file:
+SKIP_HLA: 1
+
+To specify the maximum number of jobs submitted at any one time, add this line: (default is 200)
+maxJobsAtOneTime: 200
+
+To specify the amount of memory for the merging step [default is 4 GB]:
+mergeMem 4 
+
+To specify the queue for the merging step [default is hour -W 4:00]:
+mergeQueue week 
+
+--------------------------------------------------
+
+Important Output Files:
+
+Combined final QC'd output with controls:
+OutputDirectory/pipeline.n.log [log file with error information - the n is an integer representing the nth iteration of the pipeline run]
+OutputDirectory/ProjectName.[bed,bim,fam] -- final QC'd, merged plink files
+OutputDirectory/ProjectName.HLA.[bed,bim,fam,dosage] -- final QC'd, merged HLA imputation PLINK files
+OutputDirectory/covar.euro.txt (First 10 PCs for european samples)
+OutputDirectory/euro.evec.ind.plot.png [PC plot]
+OutputDirectory/euro.evec.plot.first4PCs.png [PC plot]
+OutputDirectory/euro.evec.plot.pc12.png [PC plot]
+OutputDirectory/dups.txt [list of duplicate samples -- these have been removed from final output]
+OutputDirectory/sibs.txt [list of siblings]
+OutputDirectory/offspring.txt [list of parent-offspring]
+OutputDirectory/genome.genome [genome file calculated from all samples -- not just european samples]
+
+-----------------------------------------------------
+
+Each batch has its own output directory with the intermediate output:
+OutputDirectory/batchName/
+
+Log file for each batch is called pipeline.n.log where n is an integer corresponding to the nth time the pipeline was run for that batch
+
+For each batch that has gencall and zcall inputs, the final QC'd files
+are in the OutputDirectory/batchName/batchName.[bed,bim,fam]
+
+.checksum files are what is telling the pipeline to skip doing a step once a step is completed if the pipeline is restarted. To redo a step (ex: sample qc), then make sure all .checksum files and .out files are deleted.
+
+For all batches the following output files are available:
+OutputDirectory/batchName/european.txt [list of european samples]
+OutputDirectory/batchName/covar.all.txt [covariates based on all 1000 genomes samples]
+
+For all batches where gencall and zcall files are inputs (not qc):
+bad.samples.txt [list of samples removed; can include sex check and mendel errors depending on flags used]
+dups.txt [duplicates detected from genome calculation]
+sexCheck.sexcheck [sex check results]
+sibs.txt [sibs detected from genome calculation]
+offspring.txt [offspring detected from genome calculation]
+mendelCheckErrors.txt [mendel check errors of families that had more than specified number of mendel errors]
+genome.genome [genome file from plink]
+hetnocall.png [plot with call rate versus number of hets to gauge sample quality]
+pcaround1.evec.ind.plot.png [pca plot]
+pcaround1.evec.plot.first4PCs.png [pca plot]
+pcaround1.evec.plot.pc12.png [pca plot]
