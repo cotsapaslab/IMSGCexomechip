@@ -1,0 +1,41 @@
+## Meta File for Exome Chip QC and Analysis Pipeline
+
+## Example Usage:
+python main.py meta
+
+## Main directory where pipeline scripts are located
+Script Directory: /humgen/atgu1/fs03/wip/jackie/ecPipelineVers4/
+
+## Fill in the data with the appropriate path names after the colons (no spaces allowed)
+# Make sure output directory exists
+Output Directory: /humgen/atgu1/fs03/wip/jackie/ecPipelineVers4/test/
+# Project name must be one word with no spaces
+Project Name: TEST
+
+## Optional parameters
+# switch to 1 if only want to qc each batch individually and then quit
+QC_ONLY: 0
+SKIP_HLA: 0
+
+## Plink data inputs with parameters per batch
+
+batch1 gencall /humgen/atgu1/fs03/wip/jackie/saec/dilin/in/gencall.FHG19 
+batch1 zcall /humgen/atgu1/fs03/wip/jackie/saec/dilin/in/zcall.FHG19
+batch1 minHet 0.1
+batch1 maxHet 1.20
+batch1 gencall_missrate 0.03
+batch1 zcall_missrate 0.01
+batch1 removesexerror 1
+batch1 removemendelerror 1
+batch1 unrelated_output 1
+
+batch2 gencall /humgen/atgu1/fs03/wip/jackie/saec/dilin/in/gencall.FHG19
+batch2 zcall /humgen/atgu1/fs03/wip/jackie/saec/dilin/in/zcall.FHG19
+batch2 gencall_maxnc 10
+batch2 zcall_maxnc 10
+
+batch3 qc /humgen/atgu1/fs03/wip/jackie/saec/dilin/in/gencall.FHG19
+batch3 minHet 0.01
+
+batch4 gencall /humgen/atgu1/fs03/wip/jackie/saec/dilin/in/gencall.FHG19
+batch4 zcall /humgen/atgu1/fs03/wip/jackie/saec/dilin/in/zcall.FHG19
