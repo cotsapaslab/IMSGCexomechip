@@ -71,7 +71,7 @@ The entire pipeline can be run from `main.pipeline.sh`, which calls the scripts 
 
 
 ### Notes about options
-+ In step 1, detailed instructions, pipeline workflow and options are described in /IMSGCexomechip/src/basic_qc/README.txt 
++ In step 1,  detailed instructions, pipeline workflow and options are described in /IMSGCexomechip/src/basic_qc/README.txt 
 + In step 1.2, when processing datasets with N > 3,000 individuals, it is recommended to run the QC on a computer cluster with a week wall-time.
 + In step 3.2, third variable is the population under study, which was EUR in our experiment. All possible populations are: EUR ASN AFR AMR. Outlier detection is based on 6 standard deviations (smartpca default setting). Outliers are removed within 10 iterations (smartpca default setting), where each iteration consists of following steps: calculation of PCs, detection of outliers (individuals outside 6 SDs), removal of outliers, re-calculation of PCs.
 + In step 6.1, when processing datasets with N > 3,000 individuals, cluster analyses can be very slow. Use cluster of computers for parallel computing as described in PLINK notes.
@@ -84,7 +84,7 @@ The entire pipeline can be run from `main.pipeline.sh`, which calls the scripts 
 
 | File/directory | Description |
 | ------------- | ------------- |
-| bin/  | Contains executable verisons of PLINK, GCTA and FlashPCA.   |
+| bin/  | Contains executable versions of PLINK, GCTA and FlashPCA.   |
 | src/  | Contains all scripts required in by the pipeline.  |
 | main.pipeline.sh  | Main script with twelve QC and analysis steps of our pipeline.  |
 | README.txt  | This file.  |
@@ -92,3 +92,4 @@ The entire pipeline can be run from `main.pipeline.sh`, which calls the scripts 
 | supp/PCA_commonSNPs.autosomal.txt  | List of 16,066 common (MAF>0.05), LD-pruned variants.  |
 | supp/sex.mt.chr.variants.txt  | List of 5,574 chrX, chrY and MT variants.  |
 | supp/strata.merging.scheme_cohorts.txt | A file showing how the 42 cohorts were merged into 13 strata.  |
+| ------------- | ------------- |
