@@ -80,28 +80,24 @@ The entire pipeline can be run from `main.pipeline.sh`, which calls the scripts 
 + In step 12, note that the `+ logscale` option is required because the per-stratum association files list effect betas, NOT odds ratios (remember that `beta = ln(OR)` ).
 
 
-### Structure and description of files and directories in this distribution
+### Description of files and directories in this distribution
 
-+ Directory/file name
-+ Description
-1 basic_qc_pipeline
-QC scripts and suppl. files.
-2 post_qc_ibm
-Identity-by-missingness scripts and suppl. files.
-3 pPCA
-Projection PCA scripts and suppl. files.
-4 standardize_alleles
-Scripts and suppl. files to update allelic map to match European 1000 Genomes.
-7 differential_missingness
+| File/directory | Description |
+| ------------- | ------------- |
+| bin/  | Contains executable verisons of PLINK, GCTA and FlashPCA.   |
+| src/  | Contains all scripts required in by the pipeline.  |
+| main.pipeline.sh  | Contains all scripts required in by the pipeline.  |
+| README.txt| This file.  |
+
 Two scripts to identify SNPs with differentially missing data between cases and controls.
 Main_wrapper.sh
 Wrapper with 12 subsequent steps from raw files gencall and zcall files to MLMA meta-analysis.
 PCA_commonSNPs.autosomal.txt
 A list of common, LD-pruned autosomal SNPs used for PCA. 
+
 Per.cohort.minHet.maxHet.xlsx
 Min. and max. heterozygosity cutoffs for each cohort, used in meta file of QC pipeline.
-README.txt
-This file.
+
 strata.merging.scheme_cohorts.txt
 A file showing how the 42 cohorts were merged into 13 strata.
 
