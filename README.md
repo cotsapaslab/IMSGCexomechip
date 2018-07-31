@@ -10,7 +10,7 @@ International Multiple Sclerosis Genetics Consortium <br>
 This README file documents the quality control (QC) and analysis code used to produce the association results published in [Low frequency and rare coding variation contributes to multiple sclerosis risk](https://www.biorxiv.org/content/early/2018/03/23/286617). Here we provide an overview of the software provided in this distribution, the software dependencies, and the sources of genotype data required. We also provide lists of samples and SNPs that pass our QC process, if you do not want to step through the entire QC pipeline.  
 
 ## Disclaimers
-* Throughout, we use the LSF job scheduling system to distribute some of the more compute-intensive analyses on a cluster. We have tagged all instances with `#LSF` in `Main_wrapper.txt` for ease of reference.
+* Throughout, we use the LSF job scheduling system to distribute some of the more compute-intensive analyses on a cluster. We have tagged all instances with `#LSF` in `main.pipeline.sh` for ease of reference.
 * Association statistics calculated with different numbers of samples and/or stratum structure will vary from those we report. 
 * The code here is provided as-is. We have validated that this runs without errors on our own systems, but do not guarantee that this will be the case in different computing environments.
 
@@ -61,12 +61,11 @@ Our pipeline is split into twelve distinct steps, including meta-analysis of ass
 + R v2.15 or later (including packages ggplot2 v2.2.1, mclust v5.4, GenABEL v1.8, qqman v0.1.4, dplyr v0.7.4)
 
 ### Running the pipeline
-The entire pipeline can be run from `main_wrapper.sh`, which calls the scripts included in this distribution to execute all twelve steps of our pipeline. There are detailed instructions for each step in the wrapper script. User input is required at various stages:
+The entire pipeline can be run from `main.pipeline.sh`, which calls the scripts included in this distribution to execute all twelve steps of our pipeline. There are detailed instructions for each step in the script. User input is required at various stages:
 
-+ In Step 1, for each cohort you must first modify ~/IMSGCexomechip/1.basic_qc_pipeline/meta file. Structure of meta file used   in this analysis is described in ~/IMSGCexomechip/1.basic_qc_pipeline/README. Meta file requires per cohort minimal and       maximal heterozygosity input. Values used in this QC are saved in ~/IMSGCexomechip/Per.cohort.minHet.maxHet.xlsx.
-
-+ In Step 1, for each thing you must do …
-+ In Step 5, you must have the HLA variant file in the same directory … 
++ In step 1,you must first modify the meta file. Exemplary meta file used in our analysis is in IMSGCexomechip/src/basic_qc/meta. Structure of meta file used   in this analysis is described in ~/IMSGCexomechip/1.basic_qc_pipeline/README. You must provide path to your input zcall and gencall PLINK files and output directory. In addition, copy controls_bu.zip and controls.zip from our DropBox [link] and expand them to the /IMSGCexomechip/src/basic_qc/ before running the pipeline.
++ In step 2.2, careful inspection of cluster plots before outlier removal is advised.
++ In step 3.2, before running the PCA1_1KG_MSchip_exome_hg19.sh script on computer cluster, you must specify path to your copy of 1000 Genomes data (Phase 3), which should be in binary (bed/bim/fam) PLINK format and parsed per chromosome (e.g. chr1.bed/bim/fam, chr2.bed/bim/fam etc). These files are not provided in this distribution. 
 
 ### Notes about options
 In step 12, note that the `+ logscale` option is required because the per-stratum association files list effect betas, NOT odds ratios (remember that `beta = ln(OR)` ).
