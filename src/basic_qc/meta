@@ -1,0 +1,487 @@
+## Meta File for ExomeChip basic QC Pipeline
+
+Script Directory: /IMSGCexomechip/src/basic_qc/
+Output Directory: /IMSGCexomechip/temp/basic_qc_out/
+
+# Project name must be one word with no spaces
+Project Name: EXOMECHIP
+
+## Optional parameters
+QC_ONLY: 1
+SKIP_HLA: 1 # If 1 skips HLA imputation
+mergeQueue week 
+
+## Plink data inputs with parameters per cohort
+AUS1 gencall /path/to/plink/gencall/file/AUS1.gencall
+AUS1 zcall /path/to/plink/zcall/file/AUS1.zcall
+AUS1 minHet 0.25
+AUS1 maxHet 0.38
+AUS1 gencall_missrate 0.03
+AUS1 zcall_missrate 0.01
+AUS1 removesexerror 1
+AUS1 removemendelerror 1
+AUS1 unrelated_output 1
+AUS1 use1KGdef 0
+
+AUS2 gencall /path/to/plink/gencall/file/AUS2.gencall
+AUS2 zcall /path/to/plink/zcall/file/AUS2.zcall
+AUS2 minHet 0.25
+AUS2 maxHet 0.38
+AUS2 gencall_missrate 0.03
+AUS2 zcall_missrate 0.01
+AUS2 removesexerror 1
+AUS2 removemendelerror 1
+AUS2 unrelated_output 1
+AUS2 use1KGdef 0
+
+DEN1 gencall /path/to/plink/gencall/file/DEN1.gencall
+DEN1 zcall /path/to/plink/zcall/file/DEN1.zcall
+DEN1 minHet 0.25
+DEN1 maxHet 0.36
+DEN1 gencall_missrate 0.03
+DEN1 zcall_missrate 0.01
+DEN1 removesexerror 1
+DEN1 removemendelerror 1
+DEN1 unrelated_output 1
+DEN1 use1KGdef 0
+
+FRA gencall /path/to/plink/gencall/file/FRA.gencall
+FRA zcall /path/to/plink/zcall/file/FRA.zcall
+FRA minHet 0.25
+FRA maxHet 0.37
+FRA gencall_missrate 0.03
+FRA zcall_missrate 0.01
+FRA removesexerror 1
+FRA removemendelerror 1
+FRA unrelated_output 1
+FRA use1KGdef 0
+
+NOR gencall /path/to/plink/gencall/file/NOR.gencall
+NOR zcall /path/to/plink/zcall/file/NOR.zcall
+NOR minHet 0.25
+NOR maxHet 0.35
+NOR gencall_missrate 0.03
+NOR zcall_missrate 0.01
+NOR removesexerror 1
+NOR removemendelerror 1
+NOR unrelated_output 1
+NOR use1KGdef 0
+
+NOR_con gencall /path/to/plink/gencall/file/NOR_con.gencall
+NOR_con zcall /path/to/plink/zcall/file/NOR_con.zcall
+NOR_con minHet 0.25
+NOR_con maxHet 0.35
+NOR_con gencall_missrate 0.03
+NOR_con zcall_missrate 0.01
+NOR_con removesexerror 1
+NOR_con removemendelerror 1
+NOR_con unrelated_output 1
+NOR_con use1KGdef 0
+
+SWE1 gencall /path/to/plink/gencall/file/SWE1.gencall
+SWE1 zcall /path/to/plink/zcall/file/SWE1.zcall
+SWE1 minHet 0.25
+SWE1 maxHet 0.36
+SWE1 gencall_missrate 0.03
+SWE1 zcall_missrate 0.01
+SWE1 removesexerror 1
+SWE1 removemendelerror 1
+SWE1 unrelated_output 1
+SWE1 use1KGdef 0
+
+UCSF gencall /path/to/plink/gencall/file/UCSF.gencall
+UCSF zcall /path/to/plink/zcall/file/UCSF.zcall
+UCSF minHet 0.25
+UCSF maxHet 0.41
+UCSF gencall_missrate 0.03
+UCSF zcall_missrate 0.01
+UCSF removesexerror 1
+UCSF removemendelerror 1
+UCSF unrelated_output 1
+UCSF use1KGdef 0
+
+ITA_cas gencall /path/to/plink/gencall/file/ITA_cas.gencall
+ITA_cas zcall /path/to/plink/zcall/file/ITA_cas.zcall
+ITA_cas minHet 0.25
+ITA_cas maxHet 0.35
+ITA_cas gencall_missrate 0.03
+ITA_cas zcall_missrate 0.01
+ITA_cas removesexerror 1
+ITA_cas removemendelerror 1
+ITA_cas unrelated_output 1
+ITA_cas use1KGdef 0
+
+ITA_con gencall /path/to/plink/gencall/file/ITA_con.gencall
+ITA_con zcall /path/to/plink/zcall/file/ITA_con.zcall
+ITA_con minHet 0.25
+ITA_con maxHet 0.35
+ITA_con gencall_missrate 0.03
+ITA_con zcall_missrate 0.01
+ITA_con removesexerror 1
+ITA_con removemendelerror 1
+ITA_con unrelated_output 1
+ITA_con use1KGdef 0
+
+NL gencall /path/to/plink/gencall/file/ITA_con.gencall
+NL zcall /path/to/plink/zcall/file/ITA_con.zcall
+NL minHet 0.25
+NL maxHet 0.35
+NL gencall_missrate 0.03
+NL zcall_missrate 0.01
+NL removesexerror 1
+NL removemendelerror 1
+NL unrelated_output 1
+NL use1KGdef 0
+
+NL_con gencall /path/to/plink/gencall/file/NL_con.gencall
+NL_con zcall /path/to/plink/zcall/file/NL_con.zcall
+NL_con minHet 0.25
+NL_con maxHet 0.35
+NL_con gencall_missrate 0.03
+NL_con zcall_missrate 0.01
+NL_con removesexerror 1
+NL_con removemendelerror 1
+NL_con unrelated_output 1
+NL_con use1KGdef 0
+
+FIN_con gencall /path/to/plink/gencall/file/FIN_con.gencall
+FIN_con zcall /path/to/plink/zcall/file/FIN_con.zcall
+FIN_con minHet 0.25
+FIN_con maxHet 0.35
+FIN_con gencall_missrate 0.03
+FIN_con zcall_missrate 0.01
+FIN_con removesexerror 1
+FIN_con removemendelerror 1
+FIN_con unrelated_output 1
+FIN_con use1KGdef 0
+
+FIN_cas gencall /path/to/plink/gencall/file/FIN_cas.gencall
+FIN_cas zcall /path/to/plink/zcall/file/FIN_cas.zcall
+FIN_cas minHet 0.25
+FIN_cas maxHet 0.36
+FIN_cas gencall_missrate 0.03
+FIN_cas zcall_missrate 0.01
+FIN_cas removesexerror 1
+FIN_cas removemendelerror 1
+FIN_cas unrelated_output 1
+FIN_cas use1KGdef 0
+
+BSTN gencall /path/to/plink/gencall/file/BSTN.gencall
+BSTN zcall /path/to/plink/zcall/file/BSTN.zcall
+BSTN minHet 0.22
+BSTN maxHet 0.39
+BSTN gencall_missrate 0.03
+BSTN zcall_missrate 0.01
+BSTN removesexerror 1
+BSTN removemendelerror 1
+BSTN unrelated_output 1
+BSTN use1KGdef 0
+
+UCB gencall /path/to/plink/gencall/file/UCB.gencall
+UCB zcall /path/to/plink/zcall/file/UCB.zcall
+UCB minHet 0.25
+UCB maxHet 0.41
+UCB gencall_missrate 0.03
+UCB zcall_missrate 0.01
+UCB removesexerror 1
+UCB removemendelerror 1
+UCB unrelated_output 1
+UCB use1KGdef 0
+
+BEL_cas gencall /path/to/plink/gencall/file/BEL_cas.gencall
+BEL_cas zcall /path/to/plink/zcall/file/BEL_cas.zcall
+BEL_cas minHet 0.25
+BEL_cas maxHet 0.34
+BEL_cas gencall_missrate 0.03
+BEL_cas zcall_missrate 0.01
+BEL_cas removesexerror 1
+BEL_cas removemendelerror 1
+BEL_cas unrelated_output 1
+BEL_cas use1KGdef 0
+
+BEL_con gencall /path/to/plink/gencall/file/BEL_con.gencall
+BEL_con zcall /path/to/plink/zcall/file/BEL_con.zcall
+BEL_con minHet 0.18
+BEL_con maxHet 0.31
+BEL_con gencall_missrate 0.03
+BEL_con zcall_missrate 0.01
+BEL_con removesexerror 1
+BEL_con removemendelerror 1
+BEL_con unrelated_output 1
+BEL_con use1KGdef 0
+
+UK_con gencall /path/to/plink/gencall/file/UK_con.gencall
+UK_con zcall /path/to/plink/zcall/file/UK_con.zcall
+UK_con minHet 0.23
+UK_con maxHet 0.39
+UK_con gencall_missrate 0.03
+UK_con zcall_missrate 0.01
+UK_con removesexerror 1
+UK_con removemendelerror 1
+UK_con unrelated_output 1
+UK_con use1KGdef 0
+
+WTCCC gencall /path/to/plink/gencall/file/WTCCC.gencall
+WTCCC zcall /path/to/plink/zcall/file/WTCCC.zcall
+WTCCC minHet 0.24
+WTCCC maxHet 0.36
+WTCCC gencall_missrate 0.03
+WTCCC zcall_missrate 0.01
+WTCCC removesexerror 1
+WTCCC removemendelerror 1
+WTCCC unrelated_output 1
+WTCCC use1KGdef 0
+
+UK gencall /path/to/plink/gencall/file/UK.gencall
+UK zcall /path/to/plink/zcall/file/UK.zcall
+UK minHet 0.25
+UK maxHet 0.33
+UK gencall_missrate 0.03
+UK zcall_missrate 0.01
+UK removesexerror 1
+UK removemendelerror 1
+UK unrelated_output 1
+UK use1KGdef 0
+
+SFHS gencall /path/to/plink/gencall/file/SFHS.gencall
+SFHS zcall /path/to/plink/zcall/file/SFHS.zcall
+SFHS minHet 0.24
+SFHS maxHet 0.35
+SFHS gencall_missrate 0.03
+SFHS zcall_missrate 0.01
+SFHS removesexerror 1
+SFHS removemendelerror 1
+SFHS unrelated_output 1
+SFHS use1KGdef 0
+
+SFHS gencall /path/to/plink/gencall/file/SFHS.gencall
+SFHS zcall /path/to/plink/zcall/file/SFHS.zcall
+SFHS minHet 0.24
+SFHS maxHet 0.35
+SFHS gencall_missrate 0.03
+SFHS zcall_missrate 0.01
+SFHS removesexerror 1
+SFHS removemendelerror 1
+SFHS unrelated_output 1
+SFHS use1KGdef 0
+
+miami_pt3 gencall /path/to/plink/gencall/file/miami_pt3.gencall
+miami_pt3 zcall /path/to/plink/zcall/file/miami_pt3.zcall
+miami_pt3 minHet 0.25
+miami_pt3 maxHet 0.35
+miami_pt3 gencall_missrate 0.03
+miami_pt3 zcall_missrate 0.01
+miami_pt3 removesexerror 1
+miami_pt3 removemendelerror 1
+miami_pt3 unrelated_output 1
+miami_pt3 use1KGdef 0
+
+Australia gencall /path/to/plink/gencall/file/Australia.gencall
+Australia zcall /path/to/plink/zcall/file/Australia.zcall
+Australia minHet 0.25
+Australia maxHet 0.36
+Australia gencall_missrate 0.03
+Australia zcall_missrate 0.01
+Australia removesexerror 1
+Australia removemendelerror 1
+Australia unrelated_output 1
+Australia use1KGdef 0
+
+DenmarkPt1 gencall /path/to/plink/gencall/file/DenmarkPt1.gencall
+DenmarkPt1 zcall /path/to/plink/zcall/file/DenmarkPt1.zcall
+DenmarkPt1 minHet 0.25
+DenmarkPt1 maxHet 0.35
+DenmarkPt1 gencall_missrate 0.03
+DenmarkPt1 zcall_missrate 0.01
+DenmarkPt1 removesexerror 1
+DenmarkPt1 removemendelerror 1
+DenmarkPt1 unrelated_output 1
+DenmarkPt1 use1KGdef 0
+
+DenmarkPt2 gencall /path/to/plink/gencall/file/DenmarkPt2.gencall
+DenmarkPt2 zcall /path/to/plink/zcall/file/DenmarkPt2.zcall
+DenmarkPt2 minHet 0.25
+DenmarkPt2 maxHet 0.34
+DenmarkPt2 gencall_missrate 0.03
+DenmarkPt2 zcall_missrate 0.01
+DenmarkPt2 removesexerror 1
+DenmarkPt2 removemendelerror 1
+DenmarkPt2 unrelated_output 1
+DenmarkPt2 use1KGdef 0
+
+Italy gencall /path/to/plink/gencall/file/Italy.gencall
+Italy zcall /path/to/plink/zcall/file/Italy.zcall
+Italy minHet 0.25
+Italy maxHet 0.36
+Italy gencall_missrate 0.03
+Italy zcall_missrate 0.01
+Italy removesexerror 1
+Italy removemendelerror 1
+Italy unrelated_output 1
+Italy use1KGdef 0
+
+NOR_NL gencall /path/to/plink/gencall/file/Italy.gencall
+NOR_NL zcall /path/to/plink/zcall/file/Italy.zcall
+NOR_NL minHet 0.25
+NOR_NL maxHet 0.35
+NOR_NL gencall_missrate 0.03
+NOR_NL zcall_missrate 0.01
+NOR_NL removesexerror 1
+NOR_NL removemendelerror 1
+NOR_NL unrelated_output 1
+NOR_NL use1KGdef 0
+
+SwePt1 gencall /path/to/plink/gencall/file/SwePt1.gencall
+SwePt1 zcall /path/to/plink/zcall/file/SwePt1.zcall
+SwePt1 minHet 0.25
+SwePt1 maxHet 0.36
+SwePt1 gencall_missrate 0.03
+SwePt1 zcall_missrate 0.01
+SwePt1 removesexerror 1
+SwePt1 removemendelerror 1
+SwePt1 unrelated_output 1
+SwePt1 use1KGdef 0
+
+SwePt2 gencall /path/to/plink/gencall/file/SwePt2.gencall
+SwePt2 zcall /path/to/plink/zcall/file/SwePt2.zcall
+SwePt2 minHet 0.25
+SwePt2 maxHet 0.36
+SwePt2 gencall_missrate 0.03
+SwePt2 zcall_missrate 0.01
+SwePt2 removesexerror 1
+SwePt2 removemendelerror 1
+SwePt2 unrelated_output 1
+SwePt2 use1KGdef 0
+
+SwePt3 gencall /path/to/plink/gencall/file/SwePt3.gencall
+SwePt3 zcall /path/to/plink/zcall/file/SwePt3.zcall
+SwePt3 minHet 0.25
+SwePt3 maxHet 0.36
+SwePt3 gencall_missrate 0.03
+SwePt3 zcall_missrate 0.01
+SwePt3 removesexerror 1
+SwePt3 removemendelerror 1
+SwePt3 unrelated_output 1
+SwePt3 use1KGdef 0
+
+SwePt4 gencall /path/to/plink/gencall/file/SwePt4.gencall
+SwePt4 zcall /path/to/plink/zcall/file/SwePt4.zcall
+SwePt4 minHet 0.25
+SwePt4 maxHet 0.36
+SwePt4 gencall_missrate 0.03
+SwePt4 zcall_missrate 0.01
+SwePt4 removesexerror 1
+SwePt4 removemendelerror 1
+SwePt4 unrelated_output 1
+SwePt4 use1KGdef 0
+
+SwePt5 gencall /path/to/plink/gencall/file/SwePt5.gencall
+SwePt5 zcall /path/to/plink/zcall/file/SwePt5.zcall
+SwePt5 minHet 0.25
+SwePt5 maxHet 0.36
+SwePt5 gencall_missrate 0.03
+SwePt5 zcall_missrate 0.01
+SwePt5 removesexerror 1
+SwePt5 removemendelerror 1
+SwePt5 unrelated_output 1
+SwePt5 use1KGdef 0
+
+SwePt6 gencall /path/to/plink/gencall/file/SwePt6.gencall
+SwePt6 zcall /path/to/plink/zcall/file/SwePt6.zcall
+SwePt6 minHet 0.25
+SwePt6 maxHet 0.36
+SwePt6 gencall_missrate 0.03
+SwePt6 zcall_missrate 0.01
+SwePt6 removesexerror 1
+SwePt6 removemendelerror 1
+SwePt6 unrelated_output 1
+SwePt6 use1KGdef 0
+
+UKPt1 gencall /path/to/plink/gencall/file/UKPt1.gencall
+UKPt1 zcall /path/to/plink/zcall/file/UKPt1.zcall
+UKPt1 minHet 0.24
+UKPt1 maxHet 0.36
+UKPt1 gencall_missrate 0.03
+UKPt1 zcall_missrate 0.01
+UKPt1 removesexerror 1
+UKPt1 removemendelerror 1
+UKPt1 unrelated_output 1
+UKPt1 use1KGdef 0
+
+UKPt2 gencall /path/to/plink/gencall/file/UKPt2.gencall
+UKPt2 zcall /path/to/plink/zcall/file/UKPt2.zcall
+UKPt2 minHet 0.24
+UKPt2 maxHet 0.36
+UKPt2 gencall_missrate 0.03
+UKPt2 zcall_missrate 0.01
+UKPt2 removesexerror 1
+UKPt2 removemendelerror 1
+UKPt2 unrelated_output 1
+UKPt2 use1KGdef 0
+
+UKPt3 gencall /path/to/plink/gencall/file/UKPt3.gencall
+UKPt3 zcall /path/to/plink/zcall/file/UKPt3.zcall
+UKPt3 minHet 0.24
+UKPt3 maxHet 0.36
+UKPt3 gencall_missrate 0.03
+UKPt3 zcall_missrate 0.01
+UKPt3 removesexerror 1
+UKPt3 removemendelerror 1
+UKPt3 unrelated_output 1
+UKPt3 use1KGdef 0
+
+UKPt4 gencall /path/to/plink/gencall/file/UKPt4.gencall
+UKPt4 zcall /path/to/plink/zcall/file/UKPt4.zcall
+UKPt4 minHet 0.24
+UKPt4 maxHet 0.36
+UKPt4 gencall_missrate 0.03
+UKPt4 zcall_missrate 0.01
+UKPt4 removesexerror 1
+UKPt4 removemendelerror 1
+UKPt4 unrelated_output 1
+UKPt4 use1KGdef 0
+
+USPt1 gencall /path/to/plink/gencall/file/USPt1.gencall
+USPt1 zcall /path/to/plink/zcall/file/USPt1.zcall
+USPt1 minHet 0.24
+USPt1 maxHet 0.37
+USPt1 gencall_missrate 0.03
+USPt1 zcall_missrate 0.01
+USPt1 removesexerror 1
+USPt1 removemendelerror 1
+USPt1 unrelated_output 1
+USPt1 use1KGdef 0
+
+USPt2 gencall /path/to/plink/gencall/file/USPt2.gencall
+USPt2 zcall /path/to/plink/zcall/file/USPt2.zcall
+USPt2 minHet 0.24
+USPt2 maxHet 0.38
+USPt2 gencall_missrate 0.03
+USPt2 zcall_missrate 0.01
+USPt2 removesexerror 1
+USPt2 removemendelerror 1
+USPt2 unrelated_output 1
+USPt2 use1KGdef 0
+
+USPt3 gencall /path/to/plink/gencall/file/USPt3.gencall
+USPt3 zcall /path/to/plink/zcall/file/USPt3.zcall
+USPt3 minHet 0.24
+USPt3 maxHet 0.37
+USPt3 gencall_missrate 0.03
+USPt3 zcall_missrate 0.01
+USPt3 removesexerror 1
+USPt3 removemendelerror 1
+USPt3 unrelated_output 1
+USPt3 use1KGdef 0
+
+Greece gencall /path/to/plink/gencall/file/Greece.gencall
+Greece zcall /path/to/plink/zcall/file/Greece.zcall
+Greece minHet 0.24
+Greece maxHet 0.34
+Greece gencall_missrate 0.03
+Greece zcall_missrate 0.01
+Greece removesexerror 1
+Greece removemendelerror 1
+Greece unrelated_output 1
+Greece use1KGdef 0
+
