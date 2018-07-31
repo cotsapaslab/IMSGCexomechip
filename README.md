@@ -65,10 +65,19 @@ The entire pipeline can be run from `main.pipeline.sh`, which calls the scripts 
 
 + In step 1,you must first modify the meta file. Exemplary meta file used in our analysis is in IMSGCexomechip/src/basic_qc/meta. Structure of meta file used   in this analysis is described in ~/IMSGCexomechip/1.basic_qc_pipeline/README. You must provide path to your input zcall and gencall PLINK files and output directory. In addition, copy controls_bu.zip and controls.zip from our DropBox [link] and expand them to the /IMSGCexomechip/src/basic_qc/ before running the pipeline.
 + In step 2.2, careful inspection of cluster plots before outlier removal is advised.
-+ In step 3.2, before running the PCA1_1KG_MSchip_exome_hg19.sh script on computer cluster, you must specify path to your copy of 1000 Genomes data (Phase 3), which should be in binary (bed/bim/fam) PLINK format and parsed per chromosome (e.g. chr1.bed/bim/fam, chr2.bed/bim/fam etc). These files are not provided in this distribution. 
++ In step 3.2, before running the PCA1_1KG_MSchip_exome_hg19.sh script on computer cluster, you must specify path to your copy of 1000 Genomes data (Phase 3), which should be in binary (bed/bim/fam) PLINK format and parsed per chromosome (e.g. chr1.bed/bim/fam, chr2.bed/bim/fam etc). These files are not provided in this distribution.
++ In step 8.2, before running the PCA1_1KG_MSchip_exome_hg19.sh script on computer cluster, you must specify path to your copy of 1000 Genomes data (Phase 3), which should be in binary (bed/bim/fam) PLINK format and parsed per chromosome (e.g. chr1.bed/bim/fam, chr2.bed/bim/fam etc). These files are not provided in this distribution.
++ In step 10, we use FlashPCA, as a faster and equivalent alternative to EIGENSOFT.
+
 
 ### Notes about options
-In step 12, note that the `+ logscale` option is required because the per-stratum association files list effect betas, NOT odds ratios (remember that `beta = ln(OR)` ).
++ In step 1, detailed instructions, pipeline workflow and options are described in /IMSGCexomechip/src/basic_qc/README.txt 
++ In step 1.2, when processing datasets with N > 3,000 individuals, it is recommended to run the QC on a computer cluster with a week wall-time.
++ In step 3.2, third variable is the population under study, which was EUR in our experiment. All possible populations are: EUR ASN AFR AMR. Outlier detection is based on 6 standard deviations (smartpca default setting). Outliers are removed within 10 iterations (smartpca default setting), where each iteration consists of following steps: calculation of PCs, detection of outliers (individuals outside 6 SDs), removal of outliers, re-calculation of PCs.
++ In step 6.1, when processing datasets with N > 3,000 individuals, cluster analyses can be very slow. Use cluster of computers for parallel computing as described in PLINK notes.
++ In step 7.1, which runs run-diffmiss-qc.pl to identify variants with significant missingness differences between cases and controls, the default p is set to p<0.0001.
++ In step 10, we use FlashPCA to calculate first 20 PCs by default. One can change this by typing a different number after the --ndim flag.
++ In step 12, note that the `+ logscale` option is required because the per-stratum association files list effect betas, NOT odds ratios (remember that `beta = ln(OR)` ).
 
 
 ### Structure and description of files and directories in this distribution
@@ -96,54 +105,3 @@ This file.
 strata.merging.scheme_cohorts.txt
 A file showing how the 42 cohorts were merged into 13 strata.
 
-
-1.basic_qc_pipeline directory
-
-This directory contains scripts and other supplementary files needed to run the basic QC pipeline. Detailed instructions, pipeline workflow and options are described in ~/code4github/1.basic_qc_pipeline/README. Before running the pipeline, as described in step 1.1 in the Main_wrapper.sh, you have to modify ~/code4github/1.basic_qc_pipeline/meta file. Example structure of the meta file used in this analysis is described in ~/code4github/1.basic_qc_pipeline/README and shown in ~/code4github/1.basic_qc_pipeline/meta.
-
-Per cohort minimal and maximal heterozygosity used in this QC are saved in ~/code4github/Per.cohort.minHet.maxHet.xlsx. When processing a dataset with N > 3,000, it is recommended to run the QC on cluster with a week wall-time.
-
-
-2.post_qc_ibm
-
-Steps 2.1-3 in the Main_wrapper.sh provide the commands for running the IBM check. Script ibm.prep.sh first extracts non-HLA autosomal variants, which are then used in  calculation of identity-by-missingness matrix. Please note that ibm.prep.sh scripts expects both lists of variants, sex.mt.chr.variants.txt and hla.variants.extended.txt, to be present in the same directory. Next, cluster.ibm.R is used to calculate the MDS components from IBM matrix to detect possible correlations in patterns of missing data and output a list of outliers. Finally, potentially identified outliers are removed step 2.3.
-
-
-3.pPCA
-
-Steps 3.1-3 in the Main_wrapper.sh show the commands for running pPCA. The code expects the list of common, autosomal and LD-pruned variants saved under PCA_commonSNPs.autosomal.txt in the ~/code4github/3.pPCA/ directory. It is suggested that the script that executes pPCA, PCA1_1KG_MSchip_exome_hg19.sh, is run on a cluster for optimal performance. Please note that the second argument in the line 45 of the Main_wrapper.sh, /path/to/1kg/, is a path to PLINK level European 1000 Genomes data (phase 3) parsed per chromosome (e.g. chr1.bed/bim/fam, chr2.bed/bim/fam etc). These files are not provided in this distribution. Projection PCA is performed on the input data and on input data merged with 1000 Genomes individuals. Outlier detection is based on 6 standard deviations (smartpca default setting). Outliers are removed within 10 iterations (smartpca default setting), where each iteration consists of following steps: calculation of PCs, detection of outliers (individuals outside 6 SDs), removal of outliers, re-calculation of PCs.
-
-
-4.standardize_alleles
-
-Scripts in this directory update allelic maps of all cohorts to match the European (EUR) 1000 Genomes  before merging them into strata. The main script, standardize_alleles.echip.sh, expects the following dependencies in the same directory: 
-*  check_alleles.sh, 
-*  check_alleles.header, 
-*  allele_map_comp_flipped_to_original.dat, 
-*  allele_map_comp_to_original.dat, 
-*  allele_map_flipped_to_original.dat, 
-*  echip_original_alleles.dat.
-
-Once on the same allelic map, cohorts are then merged into the 13 strata according to scheme described in the ~/code4github/strata.merging.scheme_cohorts.txt and command in step 4.2 in the Main_wrapper.sh.
-
-6. Relatedness check in each stratum
-
-The code in step 6.1 of the Main_wrapper.sh expects the list of common, autosomal and LD-pruned variants saved under PCA_commonSNPs.autosomal.txt in the same directory.
-
-Step 6.4 of the Main_wrapper.sh expects the script run-IBD-QC.pl in the same directory.
-
-
-7.differential_missingness
-
-The main script expects run-diffmiss-qc.pl in the same directory. Significance threshold is set to p < 0.0001 by default and can be changed in line 14 of the run-diffmiss-qc.pl script.
-
-11. MLMA
-
-Step 11.2 of the Main_wrapper.sh expects PCA_commonSNPs.autosomal.txt in the same directory. Since MLMA is computationally intensive, it is suggested to run it on cluster, as shown for LSF in line 199.
-
-Step 11.5 of the Main_wrapper.sh expects a list of HLA variants, hla.variants.extended.txt, in the same directory.
-
-
-12. Meta-analysis of 13 strata MLMA association statistics
-
-Please note that “+ logscale” option was used since the variant effects are already on log-scale (i.e. betas from MLMA).
