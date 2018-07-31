@@ -6,6 +6,7 @@ bin_direc=/IMSGCexomechip/bin
 temp_direc=/IMSGCexomechip/temp
 strata_direc=/IMSGCexomechip/temp/strata
 suppl_direc=/IMSGCexomechip/suppl
+your_1kG_data=/IMSGCexomechip/path/to/1kG/
 
 
 PATH=$PATH:${bin_direc}
@@ -108,7 +109,7 @@ done
 
 # 3.2 Run pPCA on a computer cluster for each cohort
 #LSF	
-bsub -o ${temp_direc}/logs/${cohort}/ppca.log.out.${cohort} "sh ${src_direc}/pPCA/PCA1_1KG_MSchip_exome_hg19.sh /path/to/1kg/ ${temp_direc}/pPCA/${cohort}/${cohort}.pca.snps EUR"
+bsub -o ${temp_direc}/logs/${cohort}/ppca.log.out.${cohort} "sh ${src_direc}/pPCA/PCA1_1KG_MSchip_exome_hg19.sh ${your_1kG_data} ${temp_direc}/pPCA/${cohort}/${cohort}.pca.snps EUR"
 
 # 3.3 Remove pPCA outliers
 for cohort in $(cat cohorts.txt); do
@@ -263,7 +264,7 @@ done
 
 # 8.2 Run pPCA on a computer cluster for each stratum
 #LSF	
-bsub -o ${strata_direc}/ppca/${stratum}/ppca.log.out.${stratum} "sh ${src_direc}/pPCA/PCA1_1KG_MSchip_exome_hg19.sh /path/to/1kg/ ${strata_direc}/ppca/${stratum}/${stratum}.ibm.clean.ibd.clean.diff-miss.clean.pca.snps EUR"
+bsub -o ${strata_direc}/ppca/${stratum}/ppca.log.out.${stratum} "sh ${src_direc}/pPCA/PCA1_1KG_MSchip_exome_hg19.sh ${your_1kG_data} ${strata_direc}/ppca/${stratum}/${stratum}.ibm.clean.ibd.clean.diff-miss.clean.pca.snps EUR"
 
 # 8.3 Remove pPCA outliers
 for stratum in $(cat ${suppl_direc}/strata.txt); do
