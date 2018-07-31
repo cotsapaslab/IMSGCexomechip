@@ -86,18 +86,9 @@ The entire pipeline can be run from `main.pipeline.sh`, which calls the scripts 
 | ------------- | ------------- |
 | bin/  | Contains executable verisons of PLINK, GCTA and FlashPCA.   |
 | src/  | Contains all scripts required in by the pipeline.  |
-| main.pipeline.sh  | Contains all scripts required in by the pipeline.  |
-| README.txt| This file.  |
-
-Two scripts to identify SNPs with differentially missing data between cases and controls.
-Main_wrapper.sh
-Wrapper with 12 subsequent steps from raw files gencall and zcall files to MLMA meta-analysis.
-PCA_commonSNPs.autosomal.txt
-A list of common, LD-pruned autosomal SNPs used for PCA. 
-
-Per.cohort.minHet.maxHet.xlsx
-Min. and max. heterozygosity cutoffs for each cohort, used in meta file of QC pipeline.
-
-strata.merging.scheme_cohorts.txt
-A file showing how the 42 cohorts were merged into 13 strata.
-
+| main.pipeline.sh  | Main script with twelve QC and analysis steps of our pipeline.  |
+| README.txt  | This file.  |
+| supp/hla.variants.extended.txt  | List of 4,629 ExomeChip HLA region variants, chr6:24,046,865-34,985,625. |
+| supp/PCA_commonSNPs.autosomal.txt  | List of 16,066 common (MAF>0.05), LD-pruned variants.  |
+| supp/sex.mt.chr.variants.txt  | List of 5,574 chrX, chrY and MT variants.  |
+| supp/strata.merging.scheme_cohorts.txt | A file showing how the 42 cohorts were merged into 13 strata.  |
