@@ -1,13 +1,12 @@
 #!/bin/bash
 
 ## Paths to pipeline directories
-src_direc=/IMSGCexomechip/src
-bin_direc=/IMSGCexomechip/bin
-temp_direc=/IMSGCexomechip/temp
-strata_direc=/IMSGCexomechip/temp/strata
-suppl_direc=/IMSGCexomechip/suppl
-your_1kG_data=/IMSGCexomechip/path/to/1kG/
-
+src_direc=/IMSGCexomechip/src # Directory with scripts to run each of the twelve steps of the pipeline.
+bin_direc=/IMSGCexomechip/bin # Directory with Linux executables, such as PLINK, GCTA64 and FlashPCA
+temp_direc=/IMSGCexomechip/temp # Directory containing cohort-level analysis files.
+strata_direc=/IMSGCexomechip/temp/strata # Directory containing stratum-level files.
+suppl_direc=/IMSGCexomechip/suppl # Directory with supplemental data, like lists of variants.
+your_1kG_data=/IMSGCexomechip/path/to/1kG/ #Here you point the script to 1000 Genomes data.
 
 PATH=$PATH:${bin_direc}
 
