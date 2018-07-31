@@ -92,4 +92,3 @@ The entire pipeline can be run from `main.pipeline.sh`, which calls the scripts 
 | supp/PCA_commonSNPs.autosomal.txt  | List of 16,066 common (MAF>0.05), LD-pruned variants.  |
 | supp/sex.mt.chr.variants.txt  | List of 5,574 chrX, chrY and MT variants.  |
 | supp/strata.merging.scheme_cohorts.txt | A file showing how the 42 cohorts were merged into 13 strata.  |
-| ------------- | ------------- |
