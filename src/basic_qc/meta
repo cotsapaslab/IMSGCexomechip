@@ -320,8 +320,8 @@ Italy removemendelerror 1
 Italy unrelated_output 1
 Italy use1KGdef 0
 
-NOR_NL gencall /path/to/plink/gencall/file/Italy.gencall
-NOR_NL zcall /path/to/plink/zcall/file/Italy.zcall
+NOR_NL gencall /path/to/plink/gencall/file/NOR_NL.gencall
+NOR_NL zcall /path/to/plink/zcall/file/NOR_NL.zcall
 NOR_NL minHet 0.25
 NOR_NL maxHet 0.35
 NOR_NL gencall_missrate 0.03
