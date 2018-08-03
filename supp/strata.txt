@@ -1,0 +1,14 @@
+Belgium
+Denmark
+Finland
+France
+Germany
+Greece
+Italy
+Netherlands
+Norway
+Sweden
+US-BSTN
+US-UCSF1
+US-UCSF2
+UK.Australia
