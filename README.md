@@ -63,7 +63,7 @@ Our pipeline is split into twelve distinct steps, including meta-analysis of ass
 ### Running the pipeline
 The entire pipeline can be run from `main.pipeline.sh`, which calls the scripts included in this distribution to execute all twelve steps of our pipeline. There are detailed instructions for each step in the script. The script is not intended as a stand-alone, unsupervised piece of code - rather, it steps through the various procedures in our QC approach. User input is required at various stages:
 
-+ In step 1, you must first modify the meta file. An example meta file used in our analysis is in /src/basic_qc/meta. Structure of meta file used in this analysis is described in /basic_qc/README. You must provide path to your input zcall and gencall PLINK files and output directory. In addition, copy controls_bu.zip and controls.zip from our [DropBox]( https://www.dropbox.com/sh/jkkbz4p3ltilrm9/AAD5SsmJiKrfZGOCVvMeGw71a?dl=0) and expand them to /IMSGCexomechip/src/basic_qc/controls/ directory before running the pipeline.
++ In step 1, you must first modify the meta file. An example meta file used in our analysis is in /src/basic_qc/meta. Structure of meta file used in this analysis is described in /basic_qc/README. You must provide path to your input zcall and gencall PLINK files and output directory. In addition, copy controls_bu.zip and controls.zip from our [DropBox]( https://www.dropbox.com/sh/jkkbz4p3ltilrm9/AAD5SsmJiKrfZGOCVvMeGw71a?dl=0) and expand them to /src/basic_qc/controls/ directory before running the pipeline.
 + In step 2.2, careful inspection of cluster plots before outlier removal is advised.
 + In step 3.2, before running the PCA1_1KG_MSchip_exome_hg19.sh script on computer cluster, you must specify path to your copy of 1000 Genomes data (Phase 3), which should be in binary (bed/bim/fam) PLINK format and parsed per chromosome (e.g. chr1.bed/bim/fam, chr2.bed/bim/fam etc). These files are not provided in this distribution.
 + In step 8.2, before running the PCA1_1KG_MSchip_exome_hg19.sh script on computer cluster, you must specify path to your copy of 1000 Genomes data (Phase 3), which should be in binary (bed/bim/fam) PLINK format and parsed per chromosome (e.g. chr1.bed/bim/fam, chr2.bed/bim/fam etc). These files are not provided in this distribution.
@@ -71,7 +71,7 @@ The entire pipeline can be run from `main.pipeline.sh`, which calls the scripts 
 
 
 ### Notes about options
-+ In step 1, detailed instructions, pipeline workflow and options are described in /IMSGCexomechip/src/basic_qc/README.txt 
++ In step 1, detailed instructions, pipeline workflow and options are described in /src/basic_qc/README.txt 
 + In step 1.2, when processing datasets with N > 3,000 individuals, it is recommended to run the QC on a computer cluster with a week wall-time.
 + In step 3.2, the third variable is the population under study, which was EUR in our experiment. All possible populations are: EUR ASN AFR AMR. Outlier detection is based on 6 standard deviations (smartpca default setting). Outliers are removed within 10 iterations (smartpca default setting), where each iteration consists of following steps: calculation of PCs, detection of outliers (individuals outside 6 SDs), removal of outliers, re-calculation of PCs.
 + In step 6.1, when processing datasets with N > 3,000 individuals, cluster analyses can be very slow. We recommend using a compute cluster to run these calculations in parallel, as described in PLINK notes.
