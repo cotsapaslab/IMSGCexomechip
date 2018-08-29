@@ -41,7 +41,6 @@ PATH=$PATH:${bin_direc}
 ## stages as described in detail in the README.txt.
 
 
-!!! Add the LSF/queue disclamer and notice, that this script can not be run as is
 
 ################################################################################
 ############################    Step 1: Basic QC    ############################
